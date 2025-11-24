@@ -7,8 +7,8 @@ Faction representation for game state management.
 
 from dataclasses import dataclass, field
 
-from core.types.coord import Coord
-from core.types.enums.building import BuildingType
+from src.core.types.coord import Coord
+from src.core.types.enums.building import BuildingType
 
 
 @dataclass

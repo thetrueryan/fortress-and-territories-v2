@@ -1,7 +1,7 @@
 from abc import ABC
 from dataclasses import dataclass
 
-from core.types.coord import Coord
+from src.core.types.coord import Coord
 
 
 @dataclass

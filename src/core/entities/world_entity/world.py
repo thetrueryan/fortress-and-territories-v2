@@ -7,12 +7,12 @@ Represents the game map (terrain + neutral structures).
 
 from typing import Optional
 
-from core.entities.coord_based.tower import Tower
-from core.entities.coord_based.portal import Portal
-from core.main_config import settings
-from core.types.coord import Coord
-from core.types.enums.terrain import TerrainType
-from core.types.enums.world import WorldType
+from src.core.entities.coord_based.tower import Tower
+from src.core.entities.coord_based.portal import Portal
+from src.core.main_config import settings
+from src.core.types.coord import Coord
+from src.core.types.enums.terrain import TerrainType
+from src.core.types.enums.world import WorldType
 
 
 class World:

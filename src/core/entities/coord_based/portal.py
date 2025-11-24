@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from core.types.coord import Coord
+from src.core.types.coord import Coord
 from .building import Building
 from src.core.types.enums.building import BuildingType
 

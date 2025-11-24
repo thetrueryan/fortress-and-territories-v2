@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
-from core.configs.terrain import TerrainConfig
-from core.configs.colors import ColorConfig
-from core.configs.display import DisplayConfig
+from src.core.configs.terrain import TerrainConfig
+from src.core.configs.colors import ColorConfig
+from src.core.configs.display import DisplayConfig
 
 
 @dataclass
