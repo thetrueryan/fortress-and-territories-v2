@@ -3,9 +3,11 @@ from typing import Tuple
 
 import curses
 
+
 @dataclass
 class ColorConfig:
     """Color palette configuration for factions."""
+
     color_map: Tuple[int, ...] = (
         curses.COLOR_RED,
         curses.COLOR_GREEN,
@@ -15,7 +17,7 @@ class ColorConfig:
         curses.COLOR_MAGENTA,
         curses.COLOR_WHITE,
         208,  # Orange
-        46,   # Lime
+        46,  # Lime
         201,  # Pink
         130,  # Brown
         245,  # Grey

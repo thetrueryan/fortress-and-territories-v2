@@ -1,8 +1,10 @@
 from dataclasses import dataclass
 
-@dataclass  
+
+@dataclass
 class TerrainConfig:
     """Terrain symbols configuration."""
+
     empty: str = " "
     water: str = "~"
     mountain: str = "^"

@@ -7,7 +7,7 @@ from enum import Enum
 
 class TerrainType(str, Enum):
     """Types of terrain tiles on the map."""
-    
+
     EMPTY = "empty"
     WATER = "water"
     MOUNTAIN = "mountain"
@@ -15,7 +15,7 @@ class TerrainType(str, Enum):
     TOWER = "tower"
     PORTAL = "portal"
     FOG = "fog"
-    
+
     def describe(self) -> str:
         """Human-readable description of terrain type."""
         descriptions = {
@@ -28,4 +28,3 @@ class TerrainType(str, Enum):
             TerrainType.FOG: "Fog",
         }
         return descriptions.get(self, "Unknown")
-

@@ -1,4 +1,5 @@
 """Game entities module."""
+
 from src.core.entities.coord_based import (
     Base,
     Bridge,
@@ -8,8 +9,8 @@ from src.core.entities.coord_based import (
     Territory,
     Tower,
 )
-from src.core.entities.faction_entity.faction import Faction
-from src.core.entities.world_entity.world import World
+from src.core.entities.faction import Faction
+from src.core.entities.world import World
 
 __all__ = [
     # Coord-based
@@ -25,4 +26,3 @@ __all__ = [
     "World",
     "WorldType",
 ]
-

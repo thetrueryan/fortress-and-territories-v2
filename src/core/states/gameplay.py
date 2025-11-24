@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class GameplayState:
     fog_radius: int = 5
