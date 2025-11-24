@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from src.core.types.coord import Coord
 from .building import Building
@@ -13,7 +13,7 @@ class Portal(Building):
     Can be neutral (faction_id=None) or captured (faction_id set).
     Has a linked portal coordinate for teleportation.
     """
-    linked_portal_coord: Coord
+    linked_portal_coord: Coord = field(kw_only=True)
     
     def __post_init__(self):
         """Ensure building_type is PORTAL."""

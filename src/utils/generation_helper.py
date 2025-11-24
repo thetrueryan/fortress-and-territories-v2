@@ -2,8 +2,8 @@
 Generation helper utilities.
 """
 
-from core.entities.faction_entity.faction import Faction
-from core.types.coord import Coord
+from src.core.entities.faction_entity.faction import Faction
+from src.core.types.coord import Coord
 
 
 class GenerationHelper:

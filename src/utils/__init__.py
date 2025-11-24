@@ -1,6 +1,6 @@
 """Utility modules."""
 
-from utils.generation_helpers import GenerationHelper
+from src.utils.generation_helper import GenerationHelper
 
 __all__ = ["GenerationHelper"]
 
