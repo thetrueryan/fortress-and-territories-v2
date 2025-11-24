@@ -1,6 +1,4 @@
 """Game entities module."""
-
-from core.entities.clients import AI, Player
 from core.entities.coord_based import (
     Base,
     Bridge,
@@ -10,11 +8,10 @@ from core.entities.coord_based import (
     Territory,
     Tower,
 )
+from core.entities.faction_entity.faction import Faction
+from core.entities.world_entity.world import World
 
 __all__ = [
-    # Clients
-    "AI",
-    "Player",
     # Coord-based
     "Base",
     "Bridge",
@@ -23,5 +20,9 @@ __all__ = [
     "Portal",
     "Territory",
     "Tower",
+    # World & Faction
+    "Faction",
+    "World",
+    "WorldType",
 ]
 
