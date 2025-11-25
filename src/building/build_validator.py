@@ -1,6 +1,7 @@
 """
 Build validator that applies multiple game mode rules simultaneously.
 """
+
 from typing import Optional, Set
 
 from src.core.entities.faction import Faction

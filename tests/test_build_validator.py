@@ -140,4 +140,3 @@ def test_mountain_efficiency_reduces_cost():
     )
     assert efficiency_result.allowed is True
     assert efficiency_result.cost == 1
-
