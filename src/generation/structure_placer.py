@@ -12,7 +12,7 @@ from src.core.main_config import settings
 from src.core.types.coord import Coord
 from src.core.types.enums.building import BuildingType
 from src.core.types.enums.world import WorldType
-from src.utils.generation_helper import GenerationHelper
+from src.utils.generation.generation_helper import GenerationHelper
 
 
 class StructurePlacer:
