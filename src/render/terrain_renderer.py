@@ -83,7 +83,8 @@ class TerrainRenderer:
         if terrain_type == TerrainType.WATER:
             return terrain.water, curses.A_BOLD, self._palette.water_pair_id
         if terrain_type == TerrainType.MOUNTAIN:
-            return terrain.mountain, curses.A_BOLD, 0
+            mountain_pair = 2 if curses.has_colors() else 0
+            return terrain.mountain, curses.A_BOLD, mountain_pair
         if terrain_type == TerrainType.TOWER:
             return terrain.tower, curses.A_BOLD | curses.A_UNDERLINE, 0
         if terrain_type == TerrainType.PORTAL:

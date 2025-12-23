@@ -30,6 +30,7 @@ class GameRenderParams:
     camera_y: int
     view_width: int
     view_height: int
+    gameplay_state: GameplayState
     game_over_msg: Optional[str] = None
     observer_mode: bool = False
     events: Optional[Sequence[str]] = None
@@ -110,6 +111,9 @@ class GameRenderer:
             height,
             width,
             params.portal_links,
+            visible_cells,
+            params.game_over_msg,
+            params.observer_mode,
         )
 
         self._ui_panel_renderer.draw_leaderboard(
@@ -130,6 +134,5 @@ class GameRenderer:
         if not human:
             return None
 
-        gameplay_state = GameplayState()
-        visibility = VisibilityService(gameplay_state)
+        visibility = VisibilityService(params.gameplay_state)
         return visibility.get_visible_cells(human, params.world)

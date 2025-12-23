@@ -41,11 +41,12 @@ class RendererHelper:
                 pass
 
         last_pair = len(color_config.color_map)
-        handles.fog_pair_id = last_pair + 1
-        handles.water_pair_id = last_pair + 2
+        handles.water_pair_id = last_pair + 1
+        handles.fog_pair_id = last_pair + 2
 
-        curses.init_pair(handles.fog_pair_id, curses.COLOR_BLACK, -1)
-        curses.init_pair(handles.water_pair_id, curses.COLOR_CYAN, -1)
+        curses.init_pair(handles.water_pair_id, curses.COLOR_BLUE, curses.COLOR_BLACK)
+        fog_color = 240 if getattr(curses, "COLORS", 0) >= 256 else curses.COLOR_WHITE
+        curses.init_pair(handles.fog_pair_id, fog_color, curses.COLOR_BLACK)
 
         return handles
 

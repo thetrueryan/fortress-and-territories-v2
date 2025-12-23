@@ -31,8 +31,15 @@ class FactionRenderer:
         height: int,
         width: int,
         portal_links: Optional[dict[Coord, Coord]],
+        visible_cells: Optional[set[Coord]],
+        game_over_msg: Optional[str],
+        observer_mode: bool,
     ) -> None:
         """Draw all faction entities (bases, fortresses, territory, towers, portals)."""
+        fog_restriction: Optional[set[Coord]] = (
+            visible_cells if visible_cells is not None and not game_over_msg and not observer_mode else None
+        )
+
         for faction in factions:
             attr = curses.A_BOLD if faction.alive else curses.A_DIM
             color_pair = faction.color_pair if curses.has_colors() else 0
@@ -48,6 +55,7 @@ class FactionRenderer:
                 settings.display.base_char,
                 attr,
                 color_pair,
+                fog_restriction,
             )
 
             for cell in faction.fortresses:
@@ -70,6 +78,7 @@ class FactionRenderer:
                     char,
                     attr,
                     color_pair,
+                    fog_restriction,
                 )
 
             for cell in faction.territory:
@@ -84,6 +93,7 @@ class FactionRenderer:
                     settings.display.territory_char,
                     attr,
                     color_pair,
+                    fog_restriction,
                 )
 
             for cell in faction.towers:
@@ -98,6 +108,7 @@ class FactionRenderer:
                     settings.terrain.tower,
                     attr | curses.A_REVERSE,
                     color_pair,
+                    fog_restriction,
                 )
 
             if portal_links:
@@ -114,6 +125,7 @@ class FactionRenderer:
                             settings.terrain.portal,
                             attr | curses.A_REVERSE,
                             color_pair,
+                            fog_restriction,
                         )
                         self._draw_entity(
                             linked,
@@ -126,6 +138,7 @@ class FactionRenderer:
                             settings.terrain.portal,
                             attr | curses.A_REVERSE,
                             color_pair,
+                            fog_restriction,
                         )
 
     def _draw_entity(
@@ -140,12 +153,15 @@ class FactionRenderer:
         char: str,
         attr: int,
         color_pair: int,
+        fog_restriction: Optional[set[Coord]],
     ) -> None:
         """Draw a single entity at the given world coordinate."""
         wx, wy = coord.x, coord.y
         if not (camera_x <= wx < camera_x + view_width):
             return
         if not (camera_y <= wy < camera_y + view_height):
+            return
+        if fog_restriction is not None and coord not in fog_restriction:
             return
 
         sx = wx - camera_x + self.display.offset_x

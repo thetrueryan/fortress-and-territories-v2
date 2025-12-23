@@ -34,7 +34,13 @@ class UIPanelRenderer:
             game_over_msg,
             observer_mode,
         )
-        RendererHelper.safe_addstr(self.stdscr, 0, 0, info_text, curses.A_BOLD)
+        attr = self._info_text_attr(
+            factions,
+            current_turn_idx,
+            game_over_msg,
+            observer_mode,
+        )
+        RendererHelper.safe_addstr(self.stdscr, 0, 0, info_text, attr)
 
     def draw_leaderboard(
         self,
@@ -174,3 +180,20 @@ class UIPanelRenderer:
             f" Turn: {turn_name} | Moves: {moves_left}/{move_budget} "
             "| [LMB] Capture | T=Tower Vision | ~=Water"
         )
+
+    def _info_text_attr(
+        self,
+        factions: Sequence[Faction],
+        current_turn_idx: int,
+        game_over_msg: Optional[str],
+        observer_mode: bool,
+    ) -> int:
+        """Determine attribute for the info text (color per faction)."""
+        attr = curses.A_BOLD
+        if game_over_msg or observer_mode:
+            return attr
+
+        current = factions[current_turn_idx]
+        if curses.has_colors() and current.color_pair:
+            return curses.color_pair(current.color_pair) | curses.A_BOLD
+        return attr
