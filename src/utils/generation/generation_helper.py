@@ -27,7 +27,7 @@ class GenerationHelper:
             True if coordinate is within safe zone of any faction base
         """
         return any(
-            coord.manhattan_distance(faction.base) <= radius for faction in factions
+            coord.manhattan_distance(faction.base.coord) <= radius for faction in factions
         )
 
     @staticmethod

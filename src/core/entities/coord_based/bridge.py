@@ -15,8 +15,8 @@ class Bridge(Building):
 
     def __post_init__(self):
         """Ensure building_type is BRIDGE."""
-        if self.building_type != BuildingType.BRIDGE:
-            self.building_type = BuildingType.BRIDGE
+        if self.type != BuildingType.BRIDGE:
+            self.type = BuildingType.BRIDGE
 
     @property
     def should_age(self) -> bool:

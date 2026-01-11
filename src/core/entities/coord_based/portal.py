@@ -18,8 +18,8 @@ class Portal(Building):
 
     def __post_init__(self):
         """Ensure building_type is PORTAL."""
-        if self.building_type != BuildingType.PORTAL:
-            self.building_type = BuildingType.PORTAL
+        if self.type != BuildingType.PORTAL:
+            self.type = BuildingType.PORTAL
 
     def is_captured(self) -> bool:
         """Check if portal is captured by a faction."""

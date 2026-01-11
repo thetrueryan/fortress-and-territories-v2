@@ -37,7 +37,7 @@ class TargetChecker:
         """Collect candidate cells ready for capture/build actions."""
         converted = converted_mountains or set()
 
-        my_cells = set(my_faction.all_buildings) | {my_faction.base}
+        my_cells = set(my_faction.all_buildings) | {my_faction.base.coord}
         possible_spots: set[Coord] = set()
 
         for cell in my_cells:
@@ -139,7 +139,7 @@ class TargetChecker:
         owner = result.owner
 
         if owner and owner.alive:
-            if coord == owner.base:
+            if coord == owner.base.coord:
                 value += 30.0
             elif result.is_fortress:
                 value += 8.0
@@ -179,12 +179,12 @@ class TargetChecker:
         if not visible_cells:
             return False
 
-        my_base = me.base
+        my_base = me.base.coord
         for faction in factions:
             if faction is me or not faction.alive:
                 continue
 
-            enemy_base = faction.base
+            enemy_base = faction.base.coord
             dx = my_base.x - enemy_base.x
             dy = my_base.y - enemy_base.y
             if dx == 0 and dy == 0:
@@ -206,7 +206,7 @@ class TargetChecker:
         me: Faction,
         world: World,
     ) -> bool:
-        important_points = {me.base}
+        important_points = {me.base.coord}
         important_points.update(me.fortresses)
         important_points.update(me.towers)
 

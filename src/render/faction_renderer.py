@@ -45,7 +45,7 @@ class FactionRenderer:
             color_pair = faction.color_pair if curses.has_colors() else 0
 
             self._draw_entity(
-                faction.base,
+                faction.base.coord,
                 camera_x,
                 camera_y,
                 view_width,

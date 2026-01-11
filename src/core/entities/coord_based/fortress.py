@@ -14,5 +14,5 @@ class Fortress(Building):
 
     def __post_init__(self):
         """Ensure building_type is FORTRESS."""
-        if self.building_type != BuildingType.FORTRESS:
-            self.building_type = BuildingType.FORTRESS
+        if self.type != BuildingType.FORTRESS:
+            self.type = BuildingType.FORTRESS

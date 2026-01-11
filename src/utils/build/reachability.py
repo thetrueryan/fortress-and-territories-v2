@@ -64,7 +64,7 @@ class ReachabilityChecker:
         world: World,
         supply_mode: bool,
     ) -> bool:
-        if cell == faction.base:
+        if cell == faction.base.coord:
             return True
 
         if supply_mode:
@@ -98,7 +98,7 @@ class ReachabilityChecker:
         while queue:
             current = queue.popleft()
             for neighbor in current.neighbors():
-                if neighbor == faction.base or neighbor in faction.territory:
+                if neighbor == faction.base.coord or neighbor in faction.territory:
                     return True
                 if neighbor in faction.fortresses and neighbor not in visited:
                     visited.add(neighbor)
@@ -108,14 +108,14 @@ class ReachabilityChecker:
 
     @staticmethod
     def _check_supply_connection(cell: Coord, faction: Faction, world: World) -> bool:
-        if cell == faction.base:
+        if cell == faction.base.coord:
             return True
 
         if cell not in faction.territory and cell not in faction.fortresses:
             return False
 
-        visited: set[Coord] = {faction.base}
-        queue: deque[Coord] = deque([faction.base])
+        visited: set[Coord] = {faction.base.coord}
+        queue: deque[Coord] = deque([faction.base.coord])
 
         while queue:
             current = queue.popleft()

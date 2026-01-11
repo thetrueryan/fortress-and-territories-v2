@@ -69,7 +69,7 @@ class OwnerResolver:
         faction: Faction,
         world: World,
     ) -> tuple[Optional[Faction], bool]:
-        if coord == faction.base:
+        if coord == faction.base.coord:
             return faction, False
 
         if coord in faction.fortresses:

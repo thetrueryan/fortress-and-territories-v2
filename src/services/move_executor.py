@@ -90,7 +90,7 @@ class MoveExecutor:
     ) -> None:
         my_faction = context.my_faction
 
-        if cell == owner.base:
+        if cell == owner.base.coord:
             owner.alive = False
             self._add_fortress(my_faction, cell, context, track_age=False)
             context.event_log.add(f"{owner.name} DEFEATED!")

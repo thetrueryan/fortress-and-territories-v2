@@ -51,7 +51,7 @@ class VisibilityService:
         tower_sources: set[Coord] = set()
 
         # Base and territory provide normal vision
-        normal_sources.add(faction.base)
+        normal_sources.add(faction.base.coord)
         normal_sources.update(faction.territory)
 
         # Check fortresses - towers provide extended vision

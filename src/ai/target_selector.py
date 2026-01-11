@@ -44,12 +44,12 @@ class TargetSelector:
             power_ratio = enemy_power / max(my_power, 1)
 
             enemy_cells = (
-                set(faction.territory) | set(faction.fortresses) | {faction.base}
+                set(faction.territory) | set(faction.fortresses) | {faction.base.coord}
             )
             for cell in enemy_cells:
                 if visible_cells is not None and cell not in visible_cells:
                     continue
-                dist = self.helper.distance(cell, me.base)
+                dist = self.helper.distance(cell, me.base.coord)
                 if dist < defense_radius:
                     threat_score = dist * (1.0 + power_ratio * 0.5)
                     if threat_score < min_threat_score:
@@ -66,11 +66,11 @@ class TargetSelector:
             if faction is me or not faction.alive:
                 continue
 
-            if visible_cells is not None and faction.base not in visible_cells:
+            if visible_cells is not None and faction.base.coord not in visible_cells:
                 continue
 
             enemy_power = len(faction.territory) + len(faction.fortresses)
-            dist = self.helper.distance(me.base, faction.base)
+            dist = self.helper.distance(me.base.coord, faction.base.coord)
 
             score = dist * (1.0 + enemy_power * 0.1)
             if enemy_power < max(my_power * 0.5, 1):
@@ -78,7 +78,7 @@ class TargetSelector:
 
             if score < best_score:
                 best_score = score
-                best_target = faction.base
+                best_target = faction.base.coord
 
         return best_target
 
@@ -86,9 +86,9 @@ class TargetSelector:
         """
         Pick a roaming/exploration target near existing territory.
         """
-        my_cells = list(set(me.territory) | set(me.fortresses) | {me.base})
+        my_cells = list(set(me.territory) | set(me.fortresses) | {me.base.coord})
         if not my_cells:
-            return me.base
+            return me.base.coord
 
         anchor = random.choice(my_cells)
         neighbors = anchor.neighbors()
@@ -112,7 +112,7 @@ class TargetSelector:
         if not visible_cells:
             return None
 
-        my_cells = set(me.territory) | set(me.fortresses) | {me.base}
+        my_cells = set(me.territory) | set(me.fortresses) | {me.base.coord}
         best_target: Optional[Coord] = None
         min_dist = float("inf")
 
@@ -120,7 +120,7 @@ class TargetSelector:
             if tower not in visible_cells:
                 continue
             if any(self.helper.distance(tower, cell) == 1 for cell in my_cells):
-                dist = self.helper.distance(tower, me.base)
+                dist = self.helper.distance(tower, me.base.coord)
                 if dist < min_dist:
                     min_dist = dist
                     best_target = tower
@@ -131,7 +131,7 @@ class TargetSelector:
             if world.get_terrain_type(portal) != TerrainType.PORTAL:
                 continue
             if any(self.helper.distance(portal, cell) == 1 for cell in my_cells):
-                dist = self.helper.distance(portal, me.base)
+                dist = self.helper.distance(portal, me.base.coord)
                 if dist < min_dist:
                     min_dist = dist
                     best_target = portal
@@ -150,7 +150,7 @@ class TargetSelector:
         if not visible_cells:
             return False
 
-        my_base = me.base
+        my_base = me.base.coord
         defense_radius = 8
         enemy_count = 0
 
@@ -159,7 +159,7 @@ class TargetSelector:
                 continue
 
             enemy_cells = (
-                set(faction.territory) | set(faction.fortresses) | {faction.base}
+                set(faction.territory) | set(faction.fortresses) | {faction.base.coord}
             )
             for cell in enemy_cells:
                 if cell not in visible_cells:

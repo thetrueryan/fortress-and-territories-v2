@@ -17,8 +17,8 @@ class Tower(Building):
 
     def __post_init__(self):
         """Ensure building_type is TOWER."""
-        if self.building_type != BuildingType.TOWER:
-            self.building_type = BuildingType.TOWER
+        if self.type != BuildingType.TOWER:
+            self.type = BuildingType.TOWER
 
     def is_captured(self) -> bool:
         """Check if tower is captured by a faction."""

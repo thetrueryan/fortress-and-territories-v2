@@ -129,7 +129,7 @@ class AIController:
         if self._target_selector.needs_base_defense(
             context.my_faction, context.factions, visible_cells
         ):
-            return context.my_faction.base, False
+            return context.my_faction.base.coord, False
 
         target = self._target_selector.select_target(
             context.my_faction, context.factions, visible_cells

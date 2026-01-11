@@ -15,10 +15,6 @@ class AbstractCoordEntity(ABC):
 
     coord: Coord
 
-    # Simple helper methods (OK in entity)
-    def is_at(self, coord: Coord) -> bool:
-        """Check if entity is at given coordinate."""
-        return self.coord == coord
 
     def distance_to(self, other: "AbstractCoordEntity") -> int:
         """Manhattan distance to another map entity."""

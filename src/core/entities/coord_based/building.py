@@ -19,7 +19,7 @@ class Building(AbstractCoordEntity):
     """
 
     faction_id: str | None
-    building_type: BuildingType
+    type: BuildingType
     age: int = 0  # For Classic mode aging
 
     def is_owned_by(self, faction_id: str) -> bool:
@@ -32,9 +32,9 @@ class Building(AbstractCoordEntity):
 
     def is_regular(self) -> bool:
         """Check if this is a regular fortress (not special structure)."""
-        return self.building_type == BuildingType.FORTRESS
+        return self.type == BuildingType.FORTRESS
 
     @property
     def should_age(self) -> bool:
         """Check if building should age in Classic mode (only regular fortresses age)."""
-        return self.building_type == BuildingType.FORTRESS
+        return self.type == BuildingType.FORTRESS

@@ -80,7 +80,7 @@ class TerrainGenerator:
             for y in range(self.height):
                 world.set_terrain(Coord(x, y), settings.terrain.water)
 
-        base_coords = [faction.base for faction in factions]
+        base_coords = [faction.base.coord for faction in factions]
 
         # Carve islands for each base
         for base in base_coords:

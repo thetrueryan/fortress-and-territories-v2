@@ -362,7 +362,7 @@ class GameController:
             or not self.factions
         ):
             return
-        base = self.factions[self.player_faction_idx].base
+        base = self.factions[self.player_faction_idx].base.coord
         self.camera.focus_on(base)
 
     # ------------------------------------------------------------------ #

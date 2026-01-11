@@ -38,7 +38,7 @@ class BuildValidator:
         if self._is_impassable(tile):
             return BuildResult(False)
 
-        my_cells = my_faction.all_buildings | {my_faction.base}
+        my_cells = my_faction.all_buildings | {my_faction.base.coord}
         if self._is_own_cell(target_cell, my_cells):
             return BuildResult(False)
 
