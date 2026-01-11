@@ -84,7 +84,7 @@ class GameController:
         self.quit_requested = False
         self.current_round = 0
 
-        self.ai_move_delay = 1
+        self.ai_move_delay = 0.5
         self.converted_mountains: set[Coord] = set()
         self.captured_towers: set[Coord] = set()
         self.fortress_ages: dict[Coord, int] = {}
@@ -222,7 +222,7 @@ class GameController:
             if needs_refresh:
                 self._render_state()
 
-            time.sleep(0.01)
+            time.sleep(self.display.animation_delay)
 
     def _run_ai_turn(self, faction_idx: int) -> None:
         if not self.world or not self.session:
@@ -396,6 +396,7 @@ class GameController:
 
     def _init_curses(self) -> None:
         curses.curs_set(0)
+        #self.stdscr.refresh()
         self.stdscr.nodelay(True)
         self.stdscr.keypad(True)
         try:

@@ -46,9 +46,8 @@ class MenuRenderer:
         """
         Render the main menu with the highlighted option.
         """
-        stdscr = self.stdscr
-        stdscr.clear()
-        height, width = stdscr.getmaxyx()
+        self.stdscr.erase()
+        height, width = self.stdscr.getmaxyx()
 
         menu_title = title or self.display.title
         subtitle = self.display.subtitle
@@ -57,10 +56,10 @@ class MenuRenderer:
 
         try:
             RendererHelper.safe_addstr(
-                stdscr, start_y, start_x, menu_title, self.title_attr
+                self.stdscr, start_y, start_x, menu_title, self.title_attr
             )
             RendererHelper.safe_addstr(
-                stdscr,
+                self.stdscr,
                 start_y + 1,
                 width // 2 - len(subtitle) // 2,
                 subtitle,
@@ -75,14 +74,14 @@ class MenuRenderer:
 
                 if idx == selected_idx:
                     RendererHelper.safe_addstr(
-                        stdscr, y, x, f"> {option} <", self.highlight_attr
+                        self.stdscr, y, x, f"> {option} <", self.highlight_attr
                     )
                 else:
-                    RendererHelper.safe_addstr(stdscr, y, x, option, self.option_attr)
+                    RendererHelper.safe_addstr(self.stdscr, y, x, option, self.option_attr)
 
             hint = "Use ↑/↓ to select, Enter to confirm"
             RendererHelper.safe_addstr(
-                stdscr,
+                self.stdscr,
                 start_y + 4 + len(options),
                 width // 2 - len(hint) // 2,
                 hint,
@@ -91,5 +90,4 @@ class MenuRenderer:
         except curses.error:
             # Ignore drawing errors when window is too small.
             pass
-
-        stdscr.refresh()
+        self.stdscr.refresh()

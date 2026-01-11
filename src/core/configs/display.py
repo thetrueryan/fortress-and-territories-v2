@@ -7,7 +7,7 @@ class DisplayConfig:
 
     offset_x: int = 2
     offset_y: int = 2
-    animation_delay: float = 0.1
+    animation_delay: float = 0.05
     min_view_width: int = 80
     min_view_height: int = 30
     title: str = "FORTRESS & TERRITORIES"
