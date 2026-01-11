@@ -173,15 +173,3 @@ class Faction:
         """Remove portal coordinate."""
         self.remove_building(coord, BuildingType.PORTAL)
 
-    def summary(self) -> str:
-        """Human-readable summary."""
-        status = "AI" if self.is_ai else "HUMAN"
-        state = "ALIVE" if self.alive else "DEAD"
-        bases = len(self.buildings.get(BuildingType.BASE, set()))
-        return (
-            f"{self.name} ({status}, {state}) | "
-            f"Territory: {len(self.territory)} tiles | "
-            f"Buildings: {len(self.all_buildings)} "
-            f"(Base:{bases} F:{len(self.fortresses)} B:{len(self.bridges)} "
-            f"T:{len(self.towers)} P:{len(self.portals)})"
-        )

@@ -1,9 +1,5 @@
-from __future__ import annotations
-
 import curses
 import time
-from dataclasses import dataclass
-from typing import Optional
 
 from src.ai.ai_controller import AIController
 from src.building.build_validator import BuildValidator
@@ -29,17 +25,7 @@ from src.services.event_log import EventLog
 from src.services.move_executor import MoveContext, MoveExecutor
 from src.services.turn_manager import TurnManager
 from src.utils.renderer.renderer_helper import RendererHelper
-
-
-@dataclass(slots=True)
-class GameSessionState:
-    """Derived configuration/state once menu selection is confirmed."""
-
-    selection: MenuSelection
-    flags: GameModeFlags
-    observer_mode: bool
-    dynamic_camera: bool
-
+from src.core.states.session import GameSessionState
 
 class GameController:
     """High-level coordinator that owns the curses loop and game services."""
@@ -80,11 +66,11 @@ class GameController:
         self.experimental_modes: tuple[ExperimentalMode, ...] = tuple()
 
         self.game_over = False
-        self.game_over_message: Optional[str] = None
+        self.game_over_message: str | None = None
         self.quit_requested = False
         self.current_round = 0
 
-        self.ai_move_delay = 0.5
+        self.ai_move_delay = 0.3
         self.converted_mountains: set[Coord] = set()
         self.captured_towers: set[Coord] = set()
         self.fortress_ages: dict[Coord, int] = {}
@@ -396,7 +382,6 @@ class GameController:
 
     def _init_curses(self) -> None:
         curses.curs_set(0)
-        #self.stdscr.refresh()
         self.stdscr.nodelay(True)
         self.stdscr.keypad(True)
         try:

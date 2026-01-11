@@ -15,3 +15,4 @@ class DisplayConfig:
     base_char: str = "@"
     fortress_char: str = "#"
     territory_char: str = "*"
+    

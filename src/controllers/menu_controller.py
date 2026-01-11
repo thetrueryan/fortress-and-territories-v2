@@ -9,51 +9,12 @@ from src.core.configs.colors import ColorConfig
 from src.core.configs.display import DisplayConfig
 from src.core.types.enums.world import WorldType
 from src.render.menu_renderer import MenuRenderer
-
-
-class FortressMode(Enum):
-    """High-level fortress rules."""
-
-    CLASSIC = "CLASSIC"
-    CONQUEST = "CONQUEST"
-
-    def label(self) -> str:
-        return self.value.title()
-
-
-class CameraMode(Enum):
-    """Camera behaviour options."""
-
-    STATIC = "STATIC"
-    DYNAMIC = "DYNAMIC"
-
-    def label(self) -> str:
-        return self.value.title()
-
-
-class ExperimentalMode(Enum):
-    """Optional modifiers toggled from the menu."""
-
-    ANTHILL = "Anthill (Муравейник)"
-    OBSERVER = "Observer (Наблюдатель)"
-    MOUNTAIN_EFFICIENCY = "Mountain Efficiency"
-    SUPPLY = "Supply Lines"
-
-    def label(self) -> str:
-        return self.value
-
-
-@dataclass(slots=True)
-class MenuSelection:
-    """Snapshot of menu selections used to bootstrap a game session."""
-
-    fortress_mode: FortressMode
-    player_count: int
-    map_size: tuple[int, int]
-    world_type: WorldType
-    camera_mode: CameraMode
-    experimental_modes: tuple[ExperimentalMode, ...]
-
+from src.core.types.menu_selection import MenuSelection
+from src.core.types.enums.modes import (
+    FortressMode,
+    CameraMode,
+    ExperimentalMode
+)
 
 class MenuController:
     """Handles interactive menu flow before the game session starts."""
@@ -78,7 +39,7 @@ class MenuController:
         fortress_modes = list(FortressMode)
         fortress_idx = self._select_from_menu(
             fortress_modes,
-            labels=[m.label() for m in fortress_modes],
+            labels=[m.value for m in fortress_modes],
             title="SELECT FORTRESS MODE",
         )
         if fortress_idx is None:
@@ -87,7 +48,7 @@ class MenuController:
         camera_modes = list(CameraMode)
         camera_idx = self._select_from_menu(
             camera_modes,
-            labels=[m.label() for m in camera_modes],
+            labels=[m.value for m in camera_modes],
             title="SELECT CAMERA MODE",
         )
         if camera_idx is None:
@@ -137,7 +98,7 @@ class MenuController:
         exp_modes = list(ExperimentalMode)
         exp_indices = self._select_multiple_from_menu(
             exp_modes,
-            labels=[mode.label() for mode in exp_modes],
+            labels=[m.value for m in exp_modes],
             title="EXPERIMENTAL MODES (SPACE to toggle, ENTER to confirm)",
         )
         if exp_indices is None:
