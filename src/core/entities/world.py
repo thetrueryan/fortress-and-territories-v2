@@ -152,21 +152,3 @@ class World:
             settings.terrain.portal: TerrainType.PORTAL,
         }
         return terrain_map.get(tile, TerrainType.EMPTY)
-
-    def describe_tile(self, coord: Coord) -> str:
-        """Human-readable label for debug/telemetry."""
-        return self.get_terrain_type(coord).describe()
-
-    def clone(self) -> "World":
-        """Create a shallow copy of the world."""
-        new_world = World(
-            width=self.width,
-            height=self.height,
-            world_type=self.world_type,
-            portal_pairs=self.portal_pairs,
-        )
-        new_world.terrain = dict(self.terrain)
-        new_world._towers = dict(self._towers)
-        new_world._portals = dict(self._portals)
-        new_world.portal_links = dict(self.portal_links)
-        return new_world

@@ -9,7 +9,6 @@ def _start_game(stdscr) -> None:
     controller = GameController(stdscr)
     controller.run()
 
-
 def run() -> None:
     """Entry point used by CLI/poetry scripts."""
     curses.wrapper(_start_game)

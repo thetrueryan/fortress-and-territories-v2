@@ -1,29 +1,11 @@
-from __future__ import annotations
-
 import curses
-from dataclasses import dataclass
-from enum import Enum
-from typing import Optional
 
 from src.controllers.camera_controller import CameraController
 from src.core.configs.display import DisplayConfig
 from src.core.entities.world import World
 from src.core.types.coord import Coord
-
-
-class PlayerActionType(Enum):
-    """Possible actions triggered by player input."""
-
-    BUILD = "build"
-    SKIP = "skip"
-
-
-@dataclass(slots=True)
-class PlayerAction:
-    """Normalized representation of player intent."""
-
-    kind: PlayerActionType
-    coord: Optional[Coord] = None
+from src.core.types.player_action import PlayerAction
+from src.core.types.enums.action_type import PlayerActionType
 
 
 class InputHandler:
@@ -50,7 +32,7 @@ class InputHandler:
         self.display = display
         self.camera = camera
 
-    def interpret(self, key: int, world: World | None) -> Optional[PlayerAction]:
+    def interpret(self, key: int, world: World | None) -> None | PlayerAction:
         """Convert key code into a player action if applicable."""
         if key != curses.KEY_MOUSE or world is None:
             return None
