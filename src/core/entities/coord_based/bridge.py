@@ -14,8 +14,4 @@ class Bridge(Building):
     """
     icon = "B"
     cost = 1
-
-    def __post_init__(self):
-        """Ensure building_type is BRIDGE."""
-        if self.type != BuildingType.BRIDGE:
-            self.type = BuildingType.BRIDGE
+    type = BuildingType.BRIDGE

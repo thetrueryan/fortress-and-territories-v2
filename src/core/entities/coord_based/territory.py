@@ -14,11 +14,4 @@ class Territory(Building):
     """
     icon = "*"
     cost = 1
-    
-    def __post_init__(self):
-        """Ensure building_type is TERRITORY and faction_id is set."""
-        if self.type != BuildingType.TERRITORY:
-            self.type = BuildingType.TERRITORY
-        if self.faction_id is None:
-            raise ValueError("Territory must have a faction_id (cannot be None)")
-
+    type = BuildingType.TERRITORY

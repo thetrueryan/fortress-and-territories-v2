@@ -13,7 +13,7 @@ class Tower(Building):
     Provides extended vision radius.
     """
     icon = "T"
-    vision_raadius: int = 15
+    vision_radius: int = 15
     cost = 1
 
     def __post_init__(self):

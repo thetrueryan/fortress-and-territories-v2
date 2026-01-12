@@ -10,8 +10,5 @@ class TerrainType(str, Enum):
 
     EMPTY = "empty"
     WATER = "water"
-    MOUNTAIN = "mountain"
-    BRIDGE = "bridge"
-    TOWER = "tower"
-    PORTAL = "portal"
+    FOREST = "forest"
     FOG = "fog"

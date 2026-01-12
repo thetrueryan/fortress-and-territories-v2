@@ -1,9 +1,10 @@
 from dataclasses import dataclass
 
-from .abstract_cord_entity import AbstractCoordEntity
-
+from .terrain import Terrain
+from src.core.types.enums.terrain import TerrainType
 
 @dataclass
-class Forest(AbstractCoordEntity):
+class Forest(Terrain):
     icon = "^"
     cost = 2
+    type = TerrainType.FOREST

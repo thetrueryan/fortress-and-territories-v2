@@ -13,15 +13,10 @@ class Portal(Building):
     Can be neutral (faction_id=None) or captured (faction_id set).
     Has a linked portal coordinate for teleportation.
     """
-
+    type = BuildingType.PORTAL
     icon = "H"
     linked_portal_coord: Coord = field(kw_only=True)
     cost = 1
-    
-    def __post_init__(self):
-        """Ensure building_type is PORTAL."""
-        if self.type != BuildingType.PORTAL:
-            self.type = BuildingType.PORTAL
 
     def is_captured(self) -> bool:
         """Check if portal is captured by a faction."""

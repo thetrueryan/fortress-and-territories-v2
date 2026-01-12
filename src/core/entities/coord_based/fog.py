@@ -4,7 +4,7 @@ from .terrain import Terrain
 from src.core.types.enums.terrain import TerrainType
 
 @dataclass
-class Water(Terrain):
-    icon = "~"
+class Fog(Terrain):
+    icon = "░"
     cost = 5
-    type = TerrainType.WATER
+    type = TerrainType.FOG

@@ -13,7 +13,4 @@ class Fortress(Building):
     """
     icon = "#"
     cost = 999 # For classic mode, fortress is unbreakable, but in conqueror mode it eq 2
-    def __post_init__(self):
-        """Ensure building_type is FORTRESS."""
-        if self.type != BuildingType.FORTRESS:
-            self.type = BuildingType.FORTRESS
+    type = BuildingType.FORTRESS

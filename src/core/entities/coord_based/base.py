@@ -15,12 +15,4 @@ class Base(Building):
     icon = "@"
     is_destroyed: bool = False
     cost = 1
-
-    def __post_init__(self):
-        """Ensure building_type is BASE and faction_id is set."""
-        if self.type != BuildingType.BASE:
-            self.type = BuildingType.BASE
-        if self.faction_id is None:
-            raise ValueError("Base must have a faction_id (cannot be None)")
-
-
+    type = BuildingType.BASE
