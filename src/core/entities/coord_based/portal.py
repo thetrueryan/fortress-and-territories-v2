@@ -14,8 +14,10 @@ class Portal(Building):
     Has a linked portal coordinate for teleportation.
     """
 
+    icon = "H"
     linked_portal_coord: Coord = field(kw_only=True)
-
+    cost = 1
+    
     def __post_init__(self):
         """Ensure building_type is PORTAL."""
         if self.type != BuildingType.PORTAL:
@@ -28,8 +30,3 @@ class Portal(Building):
     def get_linked_coord(self) -> Coord:
         """Get coordinate of linked portal."""
         return self.linked_portal_coord
-
-    @property
-    def should_age(self) -> bool:
-        """Portals never age in Classic mode."""
-        return False

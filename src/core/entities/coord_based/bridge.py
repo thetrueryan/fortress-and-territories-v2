@@ -12,13 +12,10 @@ class Bridge(Building):
     Always owned (faction_id is never None) - bridges are built by players.
     Build cost is defined in settings, not here.
     """
+    icon = "B"
+    cost = 1
 
     def __post_init__(self):
         """Ensure building_type is BRIDGE."""
         if self.type != BuildingType.BRIDGE:
             self.type = BuildingType.BRIDGE
-
-    @property
-    def should_age(self) -> bool:
-        """Bridges never age in Classic mode."""
-        return False

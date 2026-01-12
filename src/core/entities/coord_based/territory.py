@@ -12,7 +12,9 @@ class Territory(Building):
     Territory is the basic building type that can be converted to fortress.
     Territory always has an owner (faction_id is never None).
     """
-
+    icon = "*"
+    cost = 1
+    
     def __post_init__(self):
         """Ensure building_type is TERRITORY and faction_id is set."""
         if self.type != BuildingType.TERRITORY:
@@ -20,7 +22,3 @@ class Territory(Building):
         if self.faction_id is None:
             raise ValueError("Territory must have a faction_id (cannot be None)")
 
-    @property
-    def should_age(self) -> bool:
-        """Territory never ages in Classic mode (only fortresses age)."""
-        return False

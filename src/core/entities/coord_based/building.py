@@ -8,31 +8,11 @@ from src.core.types.enums.building import BuildingType
 class Building(AbstractCoordEntity):
     """
     Base class for all buildings on the map.
-
-    Buildings can be:
-    - Base (faction's heart)
-    - Territory (owned land)
-    - Fortress (regular captured territory)
-    - Tower (captured watchtower)
-    - Bridge (built over water)
-    - Portal (captured teleporter)
     """
-
+    vision_radius: int = 5
     faction_id: str | None
     type: BuildingType
     age: int = 0  # For Classic mode aging
-
-    def is_owned_by(self, faction_id: str) -> bool:
-        """Check if fortress is owned by given faction."""
-        return self.faction_id == faction_id
-
-    def is_neutral(self) -> bool:
-        """Check if fortress is neutral (unowned)."""
-        return self.faction_id is None
-
-    def is_regular(self) -> bool:
-        """Check if this is a regular fortress (not special structure)."""
-        return self.type == BuildingType.FORTRESS
 
     @property
     def should_age(self) -> bool:

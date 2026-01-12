@@ -14,7 +14,8 @@ class AbstractCoordEntity(ABC):
     """
 
     coord: Coord
-
+    icon: str
+    cost: int
 
     def distance_to(self, other: "AbstractCoordEntity") -> int:
         """Manhattan distance to another map entity."""
