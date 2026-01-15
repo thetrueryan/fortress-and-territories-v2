@@ -4,16 +4,12 @@ World module
 
 Represents the game map (terrain + neutral structures).
 """
-
-from typing import Optional
-
-from src.core.entities.coord_based.tower import Tower
-from src.core.entities.coord_based.portal import Portal
-from src.core.main_config import settings
 from src.core.types.coord import Coord
-from src.core.types.enums.terrain import TerrainType
-from src.core.types.enums.world import WorldType
-
+from src.core.types.enums import WorldType
+from src.core.entities.coord_based import (
+    Terrain,
+    Building
+)
 
 class World:
     """
@@ -28,127 +24,50 @@ class World:
         width: int,
         height: int,
         world_type: WorldType = WorldType.STANDARD,
-        portal_pairs: int = 0,
     ) -> None:
         self.width = width
         self.height = height
-        self.terrain: dict[Coord, str] = {}
-        # Use dict for O(1) lookup by coordinate
-        self._towers: dict[Coord, Tower] = {}  # Neutral towers only
-        self._portals: dict[Coord, Portal] = {}  # Neutral portals only
-        self.portal_links: dict[Coord, Coord] = {}  # portal -> linked_portal
+        self.terrain: dict[Coord, Terrain] = {}
+        self.neutral_buildings: dict[Coord, Building] = {}
         self.world_type = world_type
-        self.portal_pairs = portal_pairs
 
-    def get_tower_coords(self) -> list[Coord]:
+    def get_neutral_building(self, coord: Coord) -> Building | None:
         """Get list of all neutral tower coordinates."""
-        return list(self._towers.keys())
+        if not coord.in_bounds(self.width, self.height):
+            return None
+        
+        building = self.neutral_buildings.get(coord)
+        if not building.faction_id:
+            return building
+        return None
 
-    def get_portal_coords(self) -> list[Coord]:
-        """Get list of all neutral portal coordinates."""
-        return list(self._portals.keys())
-
-    def in_bounds(self, coord: Coord) -> bool:
-        """Check if coordinate is within world bounds."""
-        return coord.in_bounds(self.width, self.height)
-
-    def get_terrain(self, coord: Coord, default: Optional[str] = None) -> Optional[str]:
+    def get_terrain(self, coord: Coord) -> Terrain | None:
         """Get terrain type at coordinate."""
-        if not self.in_bounds(coord):
-            return default
-        return self.terrain.get(
-            coord, default if default is not None else settings.terrain.empty
-        )
+        if not coord.in_bounds(self.width, self.height):
+            return None
+        return self.terrain[coord]
 
-    def set_terrain(self, coord: Coord, tile: str) -> None:
+    def set_terrain(self, tile: Terrain) -> None:
         """Set terrain type at coordinate."""
-        if self.in_bounds(coord):
-            self.terrain[coord] = tile
+        if tile.coord.in_bounds(self.width, self.height):
+            self.terrain[tile.coord] = tile
 
-    def is_water(self, coord: Coord) -> bool:
-        """Check if coordinate is water."""
-        return self.get_terrain(coord) == settings.terrain.water
-
-    def is_mountain(self, coord: Coord) -> bool:
-        """Check if coordinate is mountain."""
-        return self.get_terrain(coord) == settings.terrain.mountain
-
-    def is_bridge(self, coord: Coord) -> bool:
-        """Check if coordinate is bridge."""
-        return self.get_terrain(coord) == settings.terrain.bridge
-
-    def is_tower(self, coord: Coord) -> bool:
-        """Check if coordinate has tower terrain."""
-        return self.get_terrain(coord) == settings.terrain.tower
-
-    def has_neutral_tower(self, coord: Coord) -> bool:
-        """Check if coordinate has a neutral tower entity."""
-        return coord in self._towers
-
-    def get_tower(self, coord: Coord) -> Optional[Tower]:
-        """Get tower entity at coordinate (if exists)."""
-        return self._towers.get(coord)
-
-    def add_tower(self, tower: Tower) -> None:
+    def add_neutral_building(self, building: Building) -> None:
         """Add neutral tower entity."""
-        if tower.faction_id is not None:
+        if building.faction_id is not None:
             raise ValueError("Only neutral towers can be added to World")
-        self._towers[tower.coord] = tower
-        self.set_terrain(tower.coord, settings.terrain.tower)
-
-    def remove_tower(self, coord: Coord) -> Optional[Tower]:
+        
+        if not self.in_bounds(building.coord):
+            raise ValueError("Building coord out of bounds")
+        self.neutral_buildings[building.coord] = building
+    
+    def remove_neutral_building(self, coord: Coord) -> Building | None:
         """Remove neutral tower entity. Returns removed tower or None."""
-        return self._towers.pop(coord, None)
+        return self.neutral_buildings.pop(coord, None)
 
-    def get_portal(self, coord: Coord) -> Optional[Portal]:
-        """Get portal entity at coordinate (if exists)."""
-        return self._portals.get(coord)
-
-    def add_portal(self, portal: Portal) -> None:
-        """Add neutral portal entity."""
-        if portal.faction_id is not None:
-            raise ValueError("Only neutral portals can be added to World")
-        self._portals[portal.coord] = portal
-        self.set_terrain(portal.coord, settings.terrain.portal)
-
-    def remove_portal(self, coord: Coord) -> Optional[Portal]:
-        """Remove neutral portal entity. Returns removed portal or None."""
-        return self._portals.pop(coord, None)
-
-    def get_move_cost(self, coord: Coord) -> int:
+    def get_move_cost(self, coord: Coord) -> int | None:
         """Get movement cost for a tile."""
-        tile = self.get_terrain(coord, settings.terrain.empty)
-        if tile == settings.terrain.water:
-            return 999
-        if tile == settings.terrain.mountain:
-            return 2
-        return 1
-
-    def build_bridge(self, coord: Coord) -> None:
-        """Convert water tile into a bridge."""
-        if self.is_water(coord):
-            self.set_terrain(coord, settings.terrain.bridge)
-
-    def restore_to_empty(self, coord: Coord) -> None:
-        """Reset a tile to plain terrain."""
-        if self.in_bounds(coord):
-            self.set_terrain(coord, settings.terrain.empty)
-
-    def neighbors(self, coord: Coord) -> list[Coord]:
-        """Get orthogonal neighbors within bounds."""
-        return [n for n in coord.neighbors() if self.in_bounds(n)]
-
-    def get_terrain_type(self, coord: Coord) -> TerrainType:
-        """Get terrain type enum at coordinate."""
-        tile = self.get_terrain(coord, settings.terrain.empty)
-        if tile is None:
-            return TerrainType.EMPTY
-        terrain_map: dict[str, TerrainType] = {
-            settings.terrain.empty: TerrainType.EMPTY,
-            settings.terrain.water: TerrainType.WATER,
-            settings.terrain.mountain: TerrainType.MOUNTAIN,
-            settings.terrain.bridge: TerrainType.BRIDGE,
-            settings.terrain.tower: TerrainType.TOWER,
-            settings.terrain.portal: TerrainType.PORTAL,
-        }
-        return terrain_map.get(tile, TerrainType.EMPTY)
+        tile = self.get_terrain(coord)
+        if not tile:
+            return None
+        return tile.cost

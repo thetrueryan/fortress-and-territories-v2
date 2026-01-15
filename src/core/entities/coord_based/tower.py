@@ -13,13 +13,14 @@ class Tower(Building):
     Provides extended vision radius.
     """
     icon = "T"
-    vision_radius: int = 15
     cost = 1
 
-    def __post_init__(self):
-        """Ensure building_type is TOWER."""
-        if self.type != BuildingType.TOWER:
-            self.type = BuildingType.TOWER
+
+    @property
+    def vision_radius(self) -> int:
+        if self.faction_id:
+            return 15
+        return 0
 
     def is_captured(self) -> bool:
         """Check if tower is captured by a faction."""

@@ -108,5 +108,5 @@ class Faction:
                     buildings.discard(b)
                     return True
             return False
-        return False           
-        
+        return False
+    

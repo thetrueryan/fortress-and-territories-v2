@@ -9,6 +9,9 @@ from src.core.entities.coord_based.territory import Territory
 from src.core.entities.coord_based.tower import Tower
 from src.core.entities.coord_based.water import Water
 from src.core.entities.coord_based.forest import Forest
+from src.core.entities.coord_based.fog import Fog
+from src.core.entities.coord_based.empty import Empty
+from src.core.entities.coord_based.terrain import Terrain
 
 __all__ = [
     "Base",
@@ -19,5 +22,8 @@ __all__ = [
     "Territory",
     "Tower",
     "Water",
-    "Forest"
+    "Forest",
+    "Fog",
+    "Empty",
+    "Terrain"
 ]

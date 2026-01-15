@@ -9,11 +9,16 @@ class Building(AbstractCoordEntity):
     """
     Base class for all buildings on the map.
     """
-    vision_radius: int = 5
     faction_id: str | None
     type: BuildingType
     age: int = 0  # For Classic mode aging
 
+    @property
+    def vision_radius(self) -> int:
+        if self.faction_id:
+            return 5
+        return 0
+    
     @property
     def should_age(self) -> bool:
         """Check if building should age in Classic mode (only regular fortresses age)."""
